@@ -4,12 +4,12 @@ exports.up = async function(knex) {
         .createTable('recipes', table => {
             table.increments('recipe_id')
             table.string('recipe_name').notNullable().unique()
-            table.datetime('created_at')
+            table.timestamp('created_at').defaultTo(knex.fn.now())
         })
         .createTable('steps', table => {
             table.increments('step_id')
             table.integer('step_number').notNullable().unsigned()
-            table.string('step_instructions').notNullable()
+            table.text('step_instructions').notNullable()
             table.integer('recipe_id')
                 .unsigned()
                 .notNullable()
@@ -35,7 +35,7 @@ exports.up = async function(knex) {
                 .references('step_id')
                 .inTable('steps')
                 .onDelete('RESTRICT')
-            table.float('quantity').notNullable().unsigned()
+            table.string('quantity').notNullable().unsigned()
         })
 };
 
