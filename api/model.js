@@ -22,7 +22,7 @@ async function getRecipeById (recipeId) {
     let result = { steps: [] };
     result.recipe_id = query[0].recipe_id;
     result.recipe_name = query[0].recipe_name;
-    result.recipe_created_at = query[0].created_at;
+    result.created_at = query[0].created_at;
     
     // ----- Pull Ingredient Info with step_id ----- 
     let allIngredients = [];
