@@ -1,8 +1,7 @@
 const db = require('../data/db-config');
 
 async function getRecipeById (recipeId) {
-    // console.log('Get Recipe By Id Function');
-    // return 'Get Recipe By Id Function';
+
     const query = await db('recipes as r')
         .join('steps as s','s.recipe_id','r.recipe_id')
         .leftJoin('steps_ingredients as si', 's.step_id', 'si.step_id')
@@ -46,10 +45,8 @@ async function getRecipeById (recipeId) {
             stepIngredients = allIngredients.filter( item => item.step_id === query[i].step_id);
         }
 
-        // 
-        //console.log('STEP ID BEFORE CHECK: ', query[i].step_id);
+        // ----- Check to see if a step already exists -----
         if ( result.steps.length !== 0 && query[i].step_id === result.steps[result.steps.length - 1].step_id) {
-            // console.log('^^^ IF YOU SEE ME, WE SKIPPED THE ONE ABOVE')
             continue;
         }
 
@@ -60,10 +57,7 @@ async function getRecipeById (recipeId) {
             step_ingredients: stepIngredients
         })
     }
-        
-    // console.log('QUERY: ', query)
-    // return query;
-    // console.log('RESULT: ', result)
+    
     return result;
 }
 
